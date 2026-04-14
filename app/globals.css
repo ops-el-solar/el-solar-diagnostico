@@ -1,0 +1,199 @@
+@import "tailwindcss";
+@import "react-phone-number-input/style.css";
+
+/* ── Phone input overrides ── */
+.PhoneInput {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 20px;
+  border: 2px solid #f1f5f9;
+  border-radius: 16px;
+  background: #ffffff;
+  transition: border-color 0.15s ease;
+}
+.PhoneInput:focus-within {
+  border-color: #3b82f6;
+}
+.PhoneInputCountry {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.PhoneInputCountrySelect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  border: 0;
+  outline: none;
+  box-shadow: none;
+  opacity: 0;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.PhoneInputCountrySelectArrow {
+  display: block;
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid #94a3b8;
+  margin-left: 2px;
+}
+.PhoneInputCountryIcon {
+  width: 24px;
+  height: 18px;
+  overflow: hidden;
+  border-radius: 2px;
+}
+.PhoneInputCountryIcon--square {
+  width: 20px;
+  height: 20px;
+}
+.PhoneInputCountryIconImg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.PhoneInputInput {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  color: #334155;
+  background: transparent;
+  min-width: 0;
+}
+.PhoneInputInput::placeholder {
+  color: #94a3b8;
+}
+
+/* ── Dark mode: toggled via .dark class on <html> ── */
+@variant dark (&:where(.dark, .dark *));
+
+/* ── Font families (populated at runtime by next/font CSS vars) ── */
+@theme inline {
+  --font-display: var(--font-space-grotesk);
+  --font-sans:    var(--font-inter);
+  --font-accent:  var(--font-plus-jakarta);
+}
+
+/* ── Custom colour palette ── */
+@theme {
+  /* Dark palette */
+  --color-dark-bg:      #050505;
+  --color-dark-card:    #0A0A0A;
+  --color-dark-border:  #1F1F1F;
+  --color-dark-text:    #EDEDED;
+  --color-dark-muted:   #A3A3A3;
+
+  /* Light palette */
+  --color-light-bg:     #F2F2F2;
+  --color-light-card:   #FFFFFF;
+  --color-light-border: #E5E5E5;
+  --color-light-text:   #111111;
+  --color-light-muted:  #666666;
+}
+
+/* ── Base reset ── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: #F2F2F2;
+  color: #111111;
+  font-family: var(--font-inter, "Inter", system-ui, sans-serif);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dark body {
+  background-color: #050505;
+  color: #EDEDED;
+}
+
+/* ── Global noise overlay (4% opacity, fixed, non-interactive) ── */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");
+  background-size: 200px 200px;
+}
+
+/* ── Grid pattern (1px lines every 50px, 3% opacity) ── */
+.grid-pattern {
+  background-image:
+    linear-gradient(to right,  currentColor 1px, transparent 1px),
+    linear-gradient(to bottom, currentColor 1px, transparent 1px);
+  background-size: 50px 50px;
+  opacity: 0.03;
+}
+
+/* ── Form mobile overrides ── */
+@media (max-width: 639px) {
+  .form-email-input {
+    height: 56px !important;
+    font-size: 16px !important; /* previene auto-zoom en iOS */
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .form-submit-btn {
+    height: 56px !important;
+  }
+}
+
+/* ── Button fill effect (bottom-to-top reveal on hover) ── */
+.btn-fill {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition: color 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-fill::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: #2563eb;
+  transform: translateY(101%);
+  transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-fill:hover::before { transform: translateY(0); }
+
+/* ── Reveal animation (triggered by IntersectionObserver) ── */
+@keyframes reveal-up {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+.reveal-hidden  { opacity: 0; transform: translateY(40px); }
+.reveal-visible { animation: reveal-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+/* ── Hero entrance animations (CSS-driven, no JS needed) ── */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+.hero-item { opacity: 0; animation: fade-up 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.hero-d1   { animation-delay: 0.05s; }
+.hero-d2   { animation-delay: 0.18s; }
+.hero-d3   { animation-delay: 0.30s; }
+.hero-d4   { animation-delay: 0.45s; }
+.hero-d5   { animation-delay: 0.60s; }
