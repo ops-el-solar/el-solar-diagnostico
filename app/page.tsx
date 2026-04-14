@@ -1,6 +1,6 @@
-import { events } from '@/utils/analytics';
 'use client';
 
+import { events } from '@/utils/analytics';
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import ThemeToggle from "./components/ThemeToggle";
@@ -75,7 +75,6 @@ export default function Home() {
   const router = useRouter();
 
   const handleStart = (e: React.SyntheticEvent) => {
-    events.form_start();
     e.preventDefault();
     if (!email) return;
     router.push(`/analyze?email=${encodeURIComponent(email)}`);
