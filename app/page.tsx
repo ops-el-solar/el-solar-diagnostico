@@ -1,3 +1,4 @@
+import { events } from '@/utils/analytics';
 'use client';
 
 import { useState } from "react";
@@ -74,6 +75,7 @@ export default function Home() {
   const router = useRouter();
 
   const handleStart = (e: React.SyntheticEvent) => {
+    events.form_start();
     e.preventDefault();
     if (!email) return;
     router.push(`/analyze?email=${encodeURIComponent(email)}`);

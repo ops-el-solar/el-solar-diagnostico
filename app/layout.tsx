@@ -43,6 +43,17 @@ export default function RootLayout({
             __html: `try{const t=localStorage.getItem('theme');if(t==='dark')document.documentElement.classList.add('dark');}catch(e){}`,
           }}
         />
+        {/* Google Analytics 4 — El Solar 2026 */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-36410760"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">{`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-36410760');
+        `}</Script>
         {/* Meta Pixel — Datos El Solar 2026 */}
         <Script id="meta-pixel" strategy="afterInteractive">{`
           !function(f,b,e,v,n,t,s)
