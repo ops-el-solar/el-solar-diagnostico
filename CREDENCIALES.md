@@ -50,5 +50,8 @@ Las variables se inyectan directamente en Netlify:
 
 ✅ `.env.local` está en `.gitignore`
 ✅ Credenciales reales NO están en el repo
-✅ El repo privado (ops-el-solar) solo tiene `.env.example` con placeholders
+⚠️ **El repo es PÚBLICO.** Aquí solo van NOMBRES de variables, nunca valores: cualquiera
+puede leer este archivo. Las llaves reales viven en `~/.claude/secrets/`, fuera del repo,
+y en las variables de entorno de Netlify.
+(Corregido el 20-ago-2026: esta línea decía que el repo era privado y no lo es.)
 
